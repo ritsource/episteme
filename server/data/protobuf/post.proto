@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "uuid.proto";
+import "google/protobuf/timestamp.proto";
+
+message Post {
+    required UUID id: 1;
+
+    required string title: 3;
+    required string description: 4;
+
+    required repeated Link links: 5;
+    required repeated Category categories: 6;
+    required repeated Tag tags: 7;
+
+    required google.protobuf.Timestamp created_at: 8;
+    required bool is_deleted: 9;
+    required bool is_draft: 10;
+    // required bool is_pinned: 11;
+}
+
+message Link {
+    required UUID id: 1;
+
+    required string src: 2;
+    // string thumbnail: 3;
+    
+    // required string title: 4;
+    required string description: 5;
+    required string pattern: 6;
+}
+
+message Category {
+    required UUID id: 1;
+    required string title: 2;
+}
+
+message Tag {
+    required string title: 1;
+}
