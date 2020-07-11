@@ -1,24 +1,27 @@
 package models
 
 import (
-	"github.com/google/uuid"
+	"github.com/ritsource/episteme/prototype/data/protobuf/dst/postpb"
 )
 
 type Post struct {
-	id uuid.UUID
-
-	title       string
-	description string
-
-	links      []Link
-	categories []Category
-	tags       []string
+	postpb.Post
 }
 
+func (p *Post) Example() string {
+	return ""
+}
+
+// func (p *Post) GetMsg() postpb.Post {
+//	return &p.msg
+// }
+
 func (p *Post) Save() {
-	if p.id == uuid.Nil {
-		p.id = uuid.New()
-	}
+	// msg := p.GetMsg()
+
+	// if msg.Id ==  {
+	// 	p.id = uuid.New()
+	// }
 
 }
 

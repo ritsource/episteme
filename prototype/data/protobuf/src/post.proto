@@ -4,7 +4,7 @@ syntax = "proto3";
 
 package post;
 
-option go_package = "github.com/ritsource/episteme/prototype/data/protobuf/src/postpb";
+option go_package = ".;postpb";
 
 message Post {
     UUID id = 1;
