@@ -4,8 +4,8 @@ tasks:
   #     - command: brew install entr
   dev:
     run:
-      - command: printf "\033[1;33mcompilation started ...\033[0m\n"
-      - command: ls *.go | entr bash ./scripts/run-server.sh
+      - command: printf "\033[1;33mdev server started ...\033[0m\n"
+      - command: ls **/*.go | entr bash ./scripts/run-server.sh
   start:
     run:
       - command: GIT_SHA=$(git rev-parse HEAD)

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+// import "episteme/prototype/data/protobuf/uuid.proto";
+
+package post;
+
+option go_package = "github.com/ritsource/episteme/prototype/data/protobuf/src/postpb";
+
+message Post {
+    UUID id = 1;
+
+    string title = 2;
+    string description = 3;
+
+    message Link {
+        UUID id = 1;
+        string src = 2;
+        //  string title = 3;
+        string description = 4;
+    }
+
+    message Category {
+        UUID id = 1;
+        string title = 2;
+    }
+
+    repeated Link links = 4;
+    repeated Category categories = 5;
+    repeated string tags = 6;
+
+    bool is_deleted = 7;
+    bool is_draft = 8;
+    // bool is_pinned = 9;
+}
+
+message UUID {
+    string value = 1;
+}
