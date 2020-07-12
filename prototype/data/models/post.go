@@ -1,40 +1,127 @@
 package models
 
 import (
+	"bytes"
+	"encoding/binary"
+	"fmt"
+	"io"
+	"os"
+
+	"github.com/golang/protobuf/proto"
+	"github.com/google/uuid"
 	"github.com/ritsource/episteme/prototype/data/protobuf/dst/postpb"
 )
+
+const POST_MSG_DST_DIR = ".data/posts"
 
 type Post struct {
 	postpb.Post
 }
 
-func (p *Post) Example() string {
-	return ""
+type Posts []*Post
+
+func (ps Posts) SaveToFS(filepath string) error {
+	buf := new(bytes.Buffer)
+
+	for _, p := range ps {
+		if p.GetId() == "" {
+			p.Id = uuid.New().String()
+		}
+
+		b, err := proto.Marshal(p)
+		if err != nil {
+			fmt.Printf("unable to read message (post.Id = %v)\n", p.GetId())
+			return err
+		}
+
+		msglen := (len(b))
+
+		buf.Grow(msglen + 4)
+
+		err = binary.Write(buf, binary.LittleEndian, uint32(msglen))
+		if err != nil {
+			fmt.Printf("unable to read message (post.Id = %v)\n", p.GetId())
+			return err
+		}
+
+		_, err = buf.Write(b)
+		if err != nil {
+			fmt.Printf("unable to read message (post.Id = %v)\n", p.GetId())
+			return err
+		}
+
+	}
+
+	file, err := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("unable to open file to write data")
+		return err
+	}
+	defer file.Close()
+
+	_, err = file.WriteAt(buf.Bytes(), 0)
+	if err != nil {
+		fmt.Println("unable to write data to file")
+		return err
+	}
+
+	return nil
 }
 
-// func (p *Post) GetMsg() postpb.Post {
-//	return &p.msg
-// }
+func (ps Posts) ReadFromFS(filepath string) (int, error) {
+	n := 0
+	posts := []Post{}
 
-func (p *Post) Save() {
-	// msg := p.GetMsg()
+	file, err := os.OpenFile(filepath, os.O_RDONLY, 0644)
+	if err != nil {
+		fmt.Printf("unable to open file %v\n", filepath)
+		return 0, err
+	}
+	defer file.Close()
 
-	// if msg.Id ==  {
-	// 	p.id = uuid.New()
-	// }
+	for {
+		mlb := make([]byte, 4)
 
-}
+		n1, err := file.Read(mlb)
+		n += n1
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			fmt.Printf("unable to read data from file\n")
+			return n, err
+		}
 
-type Link struct {
-	src         string
-	description string
-	pattern     Pattern
-}
+		msglen := binary.LittleEndian.Uint32(mlb)
 
-type Pattern struct {
-	value string
-}
+		// buf := new(bytes.Buffer)
+		// buf.Grow(msglen)
+		buf := make([]byte, msglen)
 
-type Category struct {
-	title string
+		n2, err := file.Read(buf)
+		n += n2
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			fmt.Printf("unable to read data from file\n")
+			return n, err
+		}
+
+		post := Post{}
+		err = proto.Unmarshal(buf, &post)
+		if err != nil {
+			fmt.Printf("failed to decode message from data\n")
+			return n, err
+		}
+
+		posts = append(posts, post)
+
+	}
+
+	for _, post := range posts {
+		ps = append(ps, &post)
+	}
+
+	return 0, nil
 }

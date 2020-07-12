@@ -7,20 +7,21 @@ package post;
 option go_package = ".;postpb";
 
 message Post {
-    UUID id = 1;
+    // UUID id = 1;
+    string id = 1;
 
     string title = 2;
     string description = 3;
 
     message Link {
-        UUID id = 1;
+        // UUID id = 1;
         string src = 2;
         //  string title = 3;
         string description = 4;
     }
 
     message Category {
-        UUID id = 1;
+        // UUID id = 1;
         string title = 2;
     }
 
@@ -33,6 +34,6 @@ message Post {
     // bool is_pinned = 9;
 }
 
-message UUID {
-    string value = 1;
-}
+// message UUID {
+//     string value = 1;
+// }
