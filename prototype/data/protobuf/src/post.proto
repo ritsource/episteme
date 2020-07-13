@@ -15,7 +15,13 @@ message Post {
 
     message Link {
         // UUID id = 1;
-        string src = 2;
+
+        message Src {
+            string text = 1;
+            string url = 2;
+        }
+        Src src = 2;
+
         //  string title = 3;
         string description = 4;
     }
