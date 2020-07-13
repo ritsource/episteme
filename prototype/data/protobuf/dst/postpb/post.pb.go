@@ -32,15 +32,21 @@ type Post struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// UUID id = 1;
-	Id          string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Title       string           `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Description string           `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Links       []*Post_Link     `protobuf:"bytes,4,rep,name=links,proto3" json:"links,omitempty"`
-	Categories  []*Post_Category `protobuf:"bytes,5,rep,name=categories,proto3" json:"categories,omitempty"`
-	Tags        []string         `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty"`
-	IsDeleted   bool             `protobuf:"varint,7,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
-	IsDraft     bool             `protobuf:"varint,8,opt,name=is_draft,json=isDraft,proto3" json:"is_draft,omitempty"` // bool is_pinned = 9;
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// @inject_tag: yaml:"title"
+	Title string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty" yaml:"title"`
+	// @inject_tag: yaml:"description"
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty" yaml:"description"`
+	// @inject_tag: yaml:"links"
+	Links []*Post_Link `protobuf:"bytes,4,rep,name=links,proto3" json:"links,omitempty" yaml:"links"`
+	// @inject_tag: yaml:"categories"
+	Categories []*Post_Category `protobuf:"bytes,5,rep,name=categories,proto3" json:"categories,omitempty" yaml:"categories"`
+	// @inject_tag: yaml:"tags"
+	Tags []string `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty" yaml:"tags"`
+	// @inject_tag: yaml:"is_deleted"
+	IsDeleted bool `protobuf:"varint,7,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty" yaml:"is_deleted"`
+	// @inject_tag: yaml:"is_draft"
+	IsDraft bool `protobuf:"varint,8,opt,name=is_draft,json=isDraft,proto3" json:"is_draft,omitempty" yaml:"is_draft"`
 }
 
 func (x *Post) Reset() {
@@ -136,9 +142,10 @@ type Post_Link struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Src *Post_Link_Src `protobuf:"bytes,2,opt,name=src,proto3" json:"src,omitempty"`
-	//  string title = 3;
-	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// @inject_tag: yaml:"src"
+	Src *Post_Link_Src `protobuf:"bytes,2,opt,name=src,proto3" json:"src,omitempty" yaml:"src"`
+	// @inject_tag: yaml:"description"
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty" yaml:"description"`
 }
 
 func (x *Post_Link) Reset() {
@@ -192,8 +199,8 @@ type Post_Category struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// UUID id = 1;
-	Title string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	// @inject_tag: yaml:"title"
+	Title string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty" yaml:"title"`
 }
 
 func (x *Post_Category) Reset() {
@@ -240,8 +247,10 @@ type Post_Link_Src struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	Url  string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty"`
+	// @inject_tag: yaml:"text"
+	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty" yaml:"text"`
+	// @inject_tag: yaml:"url"
+	Url string `protobuf:"bytes,2,opt,name=url,proto3" json:"url,omitempty" yaml:"url"`
 }
 
 func (x *Post_Link_Src) Reset() {

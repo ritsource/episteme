@@ -8,35 +8,57 @@ option go_package = ".;postpb";
 
 message Post {
     // UUID id = 1;
+
     string id = 1;
 
+    // @inject_tag: yaml:"title"
     string title = 2;
+    
+    // @inject_tag: yaml:"description"
     string description = 3;
 
     message Link {
         // UUID id = 1;
 
         message Src {
+            // @inject_tag: yaml:"text"
             string text = 1;
+
+            // @inject_tag: yaml:"url"
             string url = 2;
         }
+        
+        // @inject_tag: yaml:"src"
         Src src = 2;
 
+        // @inject_tag: yaml:"title"
         //  string title = 3;
+
+        // @inject_tag: yaml:"description"
         string description = 4;
     }
 
     message Category {
         // UUID id = 1;
+        
+        // @inject_tag: yaml:"title"
         string title = 2;
     }
 
+    // @inject_tag: yaml:"links"
     repeated Link links = 4;
+    // @inject_tag: yaml:"categories"
     repeated Category categories = 5;
+    // @inject_tag: yaml:"tags"
     repeated string tags = 6;
 
+    // @inject_tag: yaml:"is_deleted"
     bool is_deleted = 7;
+    
+    // @inject_tag: yaml:"is_draft"
     bool is_draft = 8;
+
+    // @inject_tag: yaml:"is_pinned"
     // bool is_pinned = 9;
 }
 
