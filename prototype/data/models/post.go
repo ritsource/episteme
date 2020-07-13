@@ -14,9 +14,11 @@ import (
 
 const POST_MSG_DST_DIR = ".data/posts"
 
-type Post struct {
-	postpb.Post
-}
+// type Post struct {
+// 	postpb.Post
+// }
+
+type Post = postpb.Post
 
 type Posts []*Post
 
@@ -68,9 +70,9 @@ func (ps Posts) SaveToFS(filepath string) error {
 	return nil
 }
 
-func (ps Posts) ReadFromFS(filepath string) (int, error) {
+func (ps *Posts) ReadFromFS(filepath string) (int, error) {
 	n := 0
-	posts := []Post{}
+	posts := []*Post{}
 
 	file, err := os.OpenFile(filepath, os.O_RDONLY, 0644)
 	if err != nil {
@@ -115,13 +117,20 @@ func (ps Posts) ReadFromFS(filepath string) (int, error) {
 			return n, err
 		}
 
-		posts = append(posts, post)
+		posts = append(posts, &post)
 
 	}
 
-	for _, post := range posts {
-		ps = append(ps, &post)
-	}
+	// fmt.Printf("*** %+v\n", posts)
+	// for _, post := range posts {
+	// for	ps = append(ps, &post)
+	// for}
+
+	*ps = posts
+	// fmt.Printf("*** %+v\n", ps)
+
+	// isEq := reflect.DeepEqual(*ps, posts)
+	// fmt.Printf("## ## ## ## isEq = %+v\n", isEq)
 
 	return 0, nil
 }
