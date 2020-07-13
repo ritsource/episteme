@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"github.com/ritsource/episteme/prototype/data/models"
@@ -12,22 +11,40 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		panic("please pass an arguement with source yml file path")
+		panic("no input file provided")
 	}
-	ymlfp := os.Args[1]
-	fmt.Printf("ymlfp = %+v\n", ymlfp)
+	if len(os.Args) < 3 {
+		panic("no output file provided")
+	}
+	ifp := os.Args[1]
+	ofp := os.Args[2]
+	fmt.Printf("ymlfp = %+v\n", ifp)
+	fmt.Printf("outfp = %+v\n", ofp)
 
-	data, err := ioutil.ReadFile(ymlfp)
+	if ifp == "" {
+		fmt.Printf("invalid input file path %+v\n", ifp)
+	}
+	if ofp == "" {
+		fmt.Printf("invalid output file path %+v\n", ofp)
+	}
+
+	data, err := ioutil.ReadFile(ifp)
 	if err != nil {
-		fmt.Printf("unable to read file %v\n", ymlfp)
+		fmt.Printf("unable to read file %v\n", ofp)
 		panic(err)
 	}
 
 	posts := models.Posts{}
-
 	err = yaml.Unmarshal(data, &posts)
 	if err != nil {
-		log.Fatalf("error: %v", err)
+		fmt.Printf("unable to decode %v data\n", ifp)
+		panic(err)
 	}
-	fmt.Printf("--- t:\n%v\n\n", posts)
+
+	err = posts.SaveToFS(ofp)
+	if err != nil {
+		fmt.Printf("unable to save message data file to %+v\n", ofp)
+		panic(err)
+	}
+
 }

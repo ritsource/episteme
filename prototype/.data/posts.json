@@ -71,6 +71,11 @@
                 }
             }
         ],
-        "is_draft": true
+        "is_draft": true,
+        "categories": [
+          {
+            "title": "Learning"
+          }
+        ]
     }
 ]

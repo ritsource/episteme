@@ -8,18 +8,16 @@ import (
 	"github.com/ritsource/episteme/prototype/data/models"
 )
 
-const FilePath string = "../../.data/prod"
-
 var Data models.Posts = models.Posts{}
 
 func PopulateWithDummyData(ps models.Posts) {
 	Data = ps
 }
 
-func Inititalize() error {
-	fpAbs, err := filepath.Abs(FilePath)
+func Inititalize(fp string) error {
+	fpAbs, err := filepath.Abs(fp)
 	if err != nil {
-		fmt.Printf("could not resolve file %v\n", FilePath)
+		fmt.Printf("could not resolve file %v\n", fp)
 		return err
 	}
 

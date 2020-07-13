@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/google/uuid"
@@ -24,7 +25,7 @@ type Post_Category = postpb.Post_Category
 
 type Posts []*Post
 
-func (ps Posts) SaveToFS(filepath string) error {
+func (ps Posts) SaveToFS(fp string) error {
 	buf := new(bytes.Buffer)
 
 	for _, p := range ps {
@@ -56,7 +57,12 @@ func (ps Posts) SaveToFS(filepath string) error {
 
 	}
 
-	file, err := os.OpenFile(filepath, os.O_CREATE|os.O_WRONLY, 0644)
+	if err := os.MkdirAll(filepath.Dir(fp), os.ModePerm); err != nil && err != os.ErrExist {
+		fmt.Printf("unable to create directory = %+v\n", filepath.Dir(fp))
+		return err
+	}
+
+	file, err := os.OpenFile(fp, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("unable to open file to write data")
 		return err
@@ -72,13 +78,13 @@ func (ps Posts) SaveToFS(filepath string) error {
 	return nil
 }
 
-func (ps *Posts) ReadFromFS(filepath string) (int, error) {
+func (ps *Posts) ReadFromFS(fp string) (int, error) {
 	n := 0
 	posts := []*Post{}
 
-	file, err := os.OpenFile(filepath, os.O_RDONLY, 0644)
+	file, err := os.OpenFile(fp, os.O_RDONLY, 0644)
 	if err != nil {
-		fmt.Printf("unable to open file %v\n", filepath)
+		fmt.Printf("unable to open file %v\n", fp)
 		return 0, err
 	}
 	defer file.Close()
