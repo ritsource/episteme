@@ -6,7 +6,7 @@ tasks:
     run:
       - command: export GIN_MODE=debug
       - command: printf "\033[1;33mdev server started ...\033[0m\n"
-      - command: ls **/*.go | entr bash ./scripts/run-server.sh
+      - command: bash ./scripts/run-server-meta.sh
   start:
     run:
       - command: GIT_SHA=$(git rev-parse HEAD)

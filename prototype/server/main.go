@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/ritsource/episteme/prototype/data/models"
+	"github.com/ritsource/episteme/prototype/server/renderers"
 	"github.com/ritsource/episteme/prototype/server/repo"
 )
 
@@ -23,7 +24,7 @@ func main() {
 	// 	})
 	// })
 
-	// r.GET("/", renderers.RootHandler)
+	r.GET("/", renderers.RootHandler)
 
 	r.Run()
 }
