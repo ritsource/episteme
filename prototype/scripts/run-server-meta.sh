@@ -18,6 +18,7 @@ trap "stop_server" EXIT
 # there's no good in trigger a compile while
 # there's alread a compilation going on
 export BUILD_IN_PROCESS=0
+export THERE_EXISTS_A_NEWER_CHANGE=0
 
 # source - https://stackoverflow.com/a/38229197/9406420
 ls **/*.go | entr bash scripts/run-server.sh
