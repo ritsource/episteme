@@ -14,5 +14,10 @@ trap "stop_server" EXIT
 # trap "stop_server; echo \"Hello world\"" EXIT
 # trap "stop_server" SIGINT SIGTERM EXIT
 
+# variable for keeping track of build state
+# there's no good in trigger a compile while
+# there's alread a compilation going on
+export BUILD_IN_PROCESS=0
+
 # source - https://stackoverflow.com/a/38229197/9406420
 ls **/*.go | entr bash scripts/run-server.sh
