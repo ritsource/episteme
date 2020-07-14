@@ -4,11 +4,13 @@ tasks:
   #     - command: brew install entr
   dev:
     run:
+      - command: export GIN_MODE=debug
       - command: printf "\033[1;33mdev server started ...\033[0m\n"
       - command: ls **/*.go | entr bash ./scripts/run-server.sh
   start:
     run:
       - command: GIT_SHA=$(git rev-parse HEAD)
+      - command: export GIN_MODE=release
       - command: go build -o /.out/server.${GIT_SHA}.out
       - command: ./.out/server/${GIT_SHA}.out
 
