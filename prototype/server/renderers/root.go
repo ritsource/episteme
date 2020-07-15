@@ -20,10 +20,12 @@ func RootHandler(c *gin.Context) {
 	posts := repo.GetPostsByCategory(models.Post_Category{
 		Title: ctg,
 	})
+	categories := repo.GetAllCategories()
 
 	c.JSON(200, gin.H{
-		"status":  "success",
-		"message": "success",
-		"posts":   posts,
+		"status":     "success",
+		"message":    "success",
+		"posts":      posts,
+		"categories": categories,
 	})
 }

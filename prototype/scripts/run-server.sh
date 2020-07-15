@@ -8,7 +8,9 @@ function start_server() {
 
 function stop_server() {
     PID=$(ps -ef | grep -v grep | grep $BIN_PATH | awk '{print $2}')
-    kill $PID >>/dev/null
+    if kill -0 $PID; then
+        kill $PID >>/dev/null
+    fi
 }
 
 function stop_server_2() {
@@ -44,7 +46,8 @@ if [ $BUILD_IN_PROCESS -eq 0 ]; then
         printf "\033[1;32mCompiled successfully!\n\033[1;33mServer running 😋 ...\033[0m\n"
 
         # if kill -0 $(ps -ef | grep -v grep | grep $BIN_PATH | awk '{print $2}'); then
-        #     stop_server_2
+        #     stop_server
+        #     # stop_server_2
         # fi
         stop_server
         start_server
@@ -54,4 +57,4 @@ if [ $BUILD_IN_PROCESS -eq 0 ]; then
     fi
 else
     THERE_EXISTS_A_NEWER_CHANGE=1
-fi   
+fi

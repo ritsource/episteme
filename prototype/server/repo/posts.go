@@ -5,13 +5,23 @@ import (
 	"path/filepath"
 	"sync"
 
+	"reflect"
+
 	"github.com/ritsource/episteme/prototype/data/models"
 )
 
-var Data models.Posts = models.Posts{}
+// var Data models.Posts = models.Posts{}
+
+var Data = struct {
+	Posts      models.Posts
+	Categories []models.Post_Category
+}{
+	Posts:      models.Posts{},
+	Categories: []models.Post_Category{},
+}
 
 func PopulateWithDummyData(ps models.Posts) {
-	Data = ps
+	Data.Posts = ps
 }
 
 func Inititalize(fp string) error {
@@ -21,16 +31,33 @@ func Inititalize(fp string) error {
 		return err
 	}
 
-	_, err = Data.ReadFromFS(fpAbs)
-	return err
+	_, err = Data.Posts.ReadFromFS(fpAbs)
+	if err != nil {
+		return err
+	}
+
+	ctgmap := map[string]bool{}
+	for _, post := range Data.Posts {
+		for _, ctg := range post.GetCategories() {
+			ctgmap[ctg.Title] = true
+		}
+	}
+
+	for _, title := range reflect.ValueOf(ctgmap).MapKeys() {
+		Data.Categories = append(Data.Categories, models.Post_Category{
+			Title: title.String(),
+		})
+	}
+
+	return nil
 }
 
 func GetPostsByCategory(ctg models.Post_Category) models.Posts {
-	posts := make(models.Posts, len(Data))
+	posts := make(models.Posts, len(Data.Posts))
 
 	wg := sync.WaitGroup{}
 
-	for idx, post := range Data {
+	for idx, post := range Data.Posts {
 		wg.Add(1)
 
 		go func(p *models.Post, i int, wg *sync.WaitGroup) {
@@ -56,4 +83,8 @@ func GetPostsByCategory(ctg models.Post_Category) models.Posts {
 	}
 	return ps
 
+}
+
+func GetAllCategories() []models.Post_Category {
+	return Data.Categories
 }

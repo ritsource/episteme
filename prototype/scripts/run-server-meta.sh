@@ -4,7 +4,10 @@ BIN_PATH="$(git rev-parse --show-toplevel)/prototype/.out/server.out"
 
 function stop_server() {
     PID=$(ps -ef | grep -v grep | grep $BIN_PATH | awk '{print $2}')
-    kill $PID >>/dev/null
+    if kill -0 $PID; then
+        kill $PID >>/dev/null
+    fi
+    # kill $PID >>/dev/null
 }
 
 # source - https://stackoverflow.com/questions/360201/how-do-i-kill-background-processes-jobs-when-my-shell-script-exits
