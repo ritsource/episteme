@@ -7,5 +7,13 @@
 </head>
 <body>
     <h1>Hello world</h1>
+    {{range .Categories}}
+        <p>{{.Title}}</p>
+    {{end}}
+    
+    {{range .Posts}}
+        <p>{{.Title}}</p>
+    {{end}}
+
 </body>
 </html>

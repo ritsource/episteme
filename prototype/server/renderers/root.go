@@ -5,7 +5,9 @@ import (
 	"path"
 	"text/template"
 
+	"github.com/ritsource/episteme/prototype/data/models"
 	"github.com/ritsource/episteme/prototype/server/constants"
+	"github.com/ritsource/episteme/prototype/server/repo"
 )
 
 const DefaultCategory = "Learning"
@@ -23,10 +25,10 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		ctg = DefaultCategory
 	}
 
-	// posts := repo.GetPostsByCategory(models.Post_Category{
-	// 	Title: ctg,
-	// })
-	// categories := repo.GetAllCategories()
+	posts := repo.GetPostsByCategory(models.Post_Category{
+		Title: ctg,
+	})
+	categories := repo.GetAllCategories()
 
 	if r.URL.Path != "/" {
 		NotFoundHandler(w, r)
@@ -40,7 +42,13 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 500, err)
 	}
 
-	err = t.Execute(w, []string{})
+	err = t.Execute(w, struct {
+		Posts      models.Posts
+		Categories []models.Post_Category
+	}{
+		Posts:      posts,
+		Categories: categories,
+	})
 	if err != nil {
 		writeErr(w, 500, err)
 	}
