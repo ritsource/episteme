@@ -11,8 +11,11 @@ require (
 	github.com/golang/protobuf v1.4.2
 	github.com/google/uuid v1.1.1
 	github.com/json-iterator/go v1.1.10 // indirect
+	github.com/klauspost/compress v1.10.10 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/rs/cors v1.7.0 // indirect
+	github.com/valyala/fasthttp v1.15.1
 	golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae // indirect
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect

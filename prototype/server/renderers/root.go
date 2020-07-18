@@ -1,31 +1,47 @@
 package renderers
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/ritsource/episteme/prototype/data/models"
-	"github.com/ritsource/episteme/prototype/server/repo"
+	"net/http"
+	"path"
+	"text/template"
+
+	"github.com/ritsource/episteme/prototype/server/constants"
 )
 
 const DefaultCategory = "Learning"
 
-func RootHandler(c *gin.Context) {
-	qstrs := c.Request.URL.Query()
-	ctgs := qstrs["category"]
-
-	ctg := DefaultCategory
-	if len(ctgs) > 0 && ctgs[0] != "" {
-		ctg = ctgs[0]
+func RootHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		NotFoundHandler(w, r)
+		return
 	}
 
-	posts := repo.GetPostsByCategory(models.Post_Category{
-		Title: ctg,
-	})
-	categories := repo.GetAllCategories()
+	qstrs := r.URL.Query()
 
-	c.JSON(200, gin.H{
-		"status":     "success",
-		"message":    "success",
-		"posts":      posts,
-		"categories": categories,
-	})
+	ctg := string(qstrs.Get("category"))
+	if ctg == "" {
+		ctg = DefaultCategory
+	}
+
+	// posts := repo.GetPostsByCategory(models.Post_Category{
+	// 	Title: ctg,
+	// })
+	// categories := repo.GetAllCategories()
+
+	if r.URL.Path != "/" {
+		NotFoundHandler(w, r)
+		return
+	}
+
+	t, err := template.ParseFiles(
+		path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"),
+	)
+	if err != nil {
+		writeErr(w, 500, err)
+	}
+
+	err = t.Execute(w, []string{})
+	if err != nil {
+		writeErr(w, 500, err)
+	}
 }

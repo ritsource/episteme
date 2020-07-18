@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
-	"github.com/gin-gonic/gin"
 	_ "github.com/ritsource/episteme/prototype/data/models"
 	"github.com/ritsource/episteme/prototype/server/renderers"
 	"github.com/ritsource/episteme/prototype/server/repo"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -15,21 +16,25 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("Data.Categories = %+v\n", repo.Data.Categories)
+	// fmt.Printf("Data.Categories = %+v\n", repo.Data.Categories)
 
 	// posts := repo.GetPostsByCategory(models.Post_Category{Title: "Learning"})
 	// fmt.Printf("\"Learning\" Posts ...\n%+v\n", posts)
 
-	r := gin.Default()
+	mux := http.NewServeMux()
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	fs := http.FileServer(http.Dir("static/"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	r.GET("/", renderers.RootHandler)
+	mux.HandleFunc("/", renderers.RootHandler)
 
-	r.Run()
+	handler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowCredentials: true,
+	}).Handler(mux)
+
+	fmt.Printf("Server running on port %+v\n", 8080)
+	http.ListenAndServe(":8080", handler)
 
 }
