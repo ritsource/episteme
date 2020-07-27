@@ -53,8 +53,14 @@ func Inititalize(fp string) error {
 	return nil
 }
 
+var CategoryIndex = map[string]models.Posts{}
+
 func GetPostsByCategory(ctg models.Post_Category) (string, models.Posts) {
-	// NOTE: kind of an hack, so try some other way
+	// using memoization
+	if val, exists := CategoryIndex[strings.ToLower(ctg.GetTitle())]; exists {
+		return ctg.GetTitle(), val
+	}
+
 	ctgTitle := ""
 
 	posts := make(models.Posts, len(Data.Posts))
@@ -88,8 +94,10 @@ func GetPostsByCategory(ctg models.Post_Category) (string, models.Posts) {
 		}
 	}
 
-	return ctgTitle, ps
+	// using memoization
+	CategoryIndex[strings.ToLower(ctgTitle)] = ps
 
+	return ctgTitle, ps
 }
 
 func GetAllCategories() []models.Post_Category {

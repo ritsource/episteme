@@ -1,8 +1,11 @@
 package renderers
 
 import (
+	"errors"
+	"io/ioutil"
 	"net/http"
 	"path"
+	"strings"
 	"text/template"
 
 	"github.com/ritsource/episteme/prototype/data/models"
@@ -35,49 +38,24 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t, err := template.ParseFiles(
-		path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"),
-	)
+	tfd, err := ioutil.ReadFile(path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"))
+	if err != nil {
+		writeErr(w, 500, errors.New("unable to read template file"))
+	}
+
+	t, err := template.New("rootPageTemplate").Funcs(
+		template.FuncMap{
+			"ToLower": strings.ToLower,
+		},
+	).Parse(string(tfd))
+
+	// t, err := template.ParseFiles(
+	// 	path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"),
+	// )
+
 	if err != nil {
 		writeErr(w, 500, err)
 	}
-
-	ps := models.Posts{}
-	for _, p := range posts {
-		ps = append(ps, p)
-	}
-	for _, p := range posts {
-		ps = append(ps, p)
-	}
-	for _, p := range posts {
-		ps = append(ps, p)
-	}
-	for _, p := range posts {
-		ps = append(ps, p)
-	}
-
-	posts = ps
-
-	// cs := []models.Post_Category{}
-	// for i := 0; i < 40; i++ {
-	// 	for _, c := range categories {
-	// 		cs = append(cs, c)
-	// 	}
-	// }
-
-	// categories = cs
-
-	// // ctg formatted
-	// ctgf := func(str string) string {
-	// 	res := ""
-	// 	for _, s := range strings.Split(str, " ") {
-	// 		if s != "" {
-	// 			res += strings.ToUpper(s[0:1]) + strings.ToLower(s[1:len(s)])
-	// 			res += " "
-	// 		}
-	// 	}
-	// 	return res
-	// }(ctg)
 
 	err = t.Execute(w, struct {
 		Posts                 models.Posts

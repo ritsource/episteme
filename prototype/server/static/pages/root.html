@@ -43,10 +43,12 @@
             <!-- <h2>Categories</h2> -->
 
             {{range .Categories}}
+            {{$SelectedCategoryTitle_LowerCase:=($.SelectedCategoryTitle | ToLower)}}
             <p>
+              {{$Title_LowerCase:=(.Title | ToLower)}}
               <a
-                class="common_text_styles {{if eq .Title $.SelectedCategoryTitle}} sidebar_a_selected_category {{end}}"
-                href="?category={{.Title}}"
+                class="common_text_styles {{if eq $Title_LowerCase $SelectedCategoryTitle_LowerCase}} sidebar_a_selected_category {{end}}"
+                href="?category={{$Title_LowerCase}}"
                 >{{.Title}}</a
               >
             </p>
