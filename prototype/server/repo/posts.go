@@ -1,39 +1,27 @@
 package repo
 
 import (
-	"fmt"
-	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
 
 	"reflect"
 
+	"github.com/ritsource/episteme/prototype/constants"
 	"github.com/ritsource/episteme/prototype/data/models"
 )
 
-// var Data models.Posts = models.Posts{}
-
 var Data = struct {
-	Posts      models.Posts
-	Categories []models.Post_Category
+	Posts          models.Posts
+	Categories     []models.Post_Category
+	PinnedWebsites models.PinnedWebsites
 }{
 	Posts:      models.Posts{},
 	Categories: []models.Post_Category{},
 }
 
-func PopulateWithDummyData(ps models.Posts) {
-	Data.Posts = ps
-}
-
-func Inititalize(fp string) error {
-	fpAbs, err := filepath.Abs(fp)
-	if err != nil {
-		fmt.Printf("could not resolve file %v\n", fp)
-		return err
-	}
-
-	_, err = Data.Posts.ReadFromFS(fpAbs)
+func Inititalize() error {
+	_, err := Data.Posts.ReadFromFS(constants.DEFAULT_POSTS_DATA_OUTPUT_FILEPATH)
 	if err != nil {
 		return err
 	}
@@ -54,6 +42,11 @@ func Inititalize(fp string) error {
 	sort.Slice(Data.Categories, func(i, j int) bool {
 		return Data.Categories[i].Title < Data.Categories[j].Title
 	})
+
+	_, err = Data.PinnedWebsites.ReadFromFS(constants.DEFAULT_PINNED_WEBSITES_DATA_OUTPUT_FILEPATH)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

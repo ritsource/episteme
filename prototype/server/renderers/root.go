@@ -8,8 +8,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/ritsource/episteme/prototype/constants"
 	"github.com/ritsource/episteme/prototype/data/models"
-	"github.com/ritsource/episteme/prototype/server/constants"
 	"github.com/ritsource/episteme/prototype/server/repo"
 )
 

@@ -5,15 +5,15 @@ import (
 	"net/http"
 	"path"
 
+	"github.com/ritsource/episteme/prototype/constants"
 	_ "github.com/ritsource/episteme/prototype/data/models"
-	"github.com/ritsource/episteme/prototype/server/constants"
 	"github.com/ritsource/episteme/prototype/server/renderers"
 	"github.com/ritsource/episteme/prototype/server/repo"
 	"github.com/rs/cors"
 )
 
 func main() {
-	err := repo.Inititalize(".data/dst/prod")
+	err := repo.Inititalize()
 	if err != nil {
 		panic(err)
 	}

@@ -5,46 +5,45 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/ritsource/episteme/prototype/constants"
 	"github.com/ritsource/episteme/prototype/data/models"
 	"gopkg.in/yaml.v2"
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		panic("no input file provided")
-	}
-	if len(os.Args) < 3 {
-		panic("no output file provided")
-	}
-	ifp := os.Args[1]
-	ofp := os.Args[2]
-	// fmt.Printf("ymlfp = %+v\n", ifp)
-	// fmt.Printf("outfp = %+v\n", ofp)
-
-	if ifp == "" {
-		fmt.Printf("invalid input file path %+v\n", ifp)
-	}
-	if ofp == "" {
-		fmt.Printf("invalid output file path %+v\n", ofp)
-	}
-
-	data, err := ioutil.ReadFile(ifp)
+	bs, err := ioutil.ReadFile(constants.DEFAULT_DATA_INPUT_CONFIG_FILEPATH)
 	if err != nil {
-		fmt.Printf("unable to read file %v\n", ofp)
+		fmt.Printf("unable to read file %v\n", constants.DEFAULT_DATA_INPUT_CONFIG_FILEPATH)
 		panic(err)
 	}
 
-	posts := models.Posts{}
-	err = yaml.Unmarshal(data, &posts)
-	if err != nil {
-		fmt.Printf("unable to decode %v data\n", ifp)
+	err = os.MkdirAll(constants.DEFAULT_DATA_OUTPUT_DIR, 0700)
+	if err != nil && err != os.ErrExist {
 		panic(err)
 	}
 
-	err = posts.SaveToFS(ofp)
+	type T struct {
+		Posts          models.Posts          `json:"posts" yaml:"posts"`
+		PinnedWebsites models.PinnedWebsites `json:"pinned_websites" yaml:"pinned_websites"`
+	}
+
+	data := T{}
+	err = yaml.Unmarshal(bs, &data)
+	// err = json.Unmarshal(bs, &data)
 	if err != nil {
-		fmt.Printf("unable to save message data file to %+v\n", ofp)
+		fmt.Printf("unable to decode %v data\n", constants.DEFAULT_DATA_INPUT_CONFIG_FILEPATH)
 		panic(err)
 	}
 
+	err = data.Posts.SaveToFS(constants.DEFAULT_POSTS_DATA_OUTPUT_FILEPATH)
+	if err != nil {
+		fmt.Printf("unable to save message data file to %+v\n", constants.DEFAULT_POSTS_DATA_OUTPUT_FILEPATH)
+		panic(err)
+	}
+
+	err = data.PinnedWebsites.SaveToFS(constants.DEFAULT_PINNED_WEBSITES_DATA_OUTPUT_FILEPATH)
+	if err != nil {
+		fmt.Printf("unable to save message data file to %+v\n", constants.DEFAULT_PINNED_WEBSITES_DATA_OUTPUT_FILEPATH)
+		panic(err)
+	}
 }

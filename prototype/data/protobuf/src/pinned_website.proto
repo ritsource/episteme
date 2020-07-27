@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pinned_websites;
+
+option go_package = ".;pinned_websitespb";
+
+message PinnedWebsite {
+    string id = 1;
+
+    // @inject_tag: yaml:"value"
+    string value = 2;
+}
