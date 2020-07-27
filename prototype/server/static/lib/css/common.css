@@ -1,0 +1,114 @@
+:root {
+  --main-theme-color: #FF5600;
+  /* --main-theme-color: #00a82d; */
+
+  --main-bg-color: white;
+
+  --border-color-2: #909090;
+  --border-color: #bbb;
+
+  --text-color-lightest: #707070;
+  --text-color-light: #606060;
+  --text-color-medium: #424242;
+  --text-color-dark: #333333;
+
+  --container-width: calc(100% - 200px);
+
+  /* header of post container */
+  --article-header-height: 36px;
+  --article-header-font-size: 2rem;
+
+  /* header of categories */
+  --sidebar-header-margin-top: 15px;
+}
+
+body {
+  background-color: var(--main-bg-color);
+}
+
+html {
+  /* font-size: 1rem; */
+  font-size: 14px;
+}
+
+* {
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif; */
+  font-family: "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+
+  /* font-family: 'Oxygen', sans-serif; */
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  font-size: 1rem;
+  color: var(--text-color-light);
+  font-weight: normal;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+		'Droid Sans', 'Helvetica Neue', sans-serif; */
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px;
+  padding: 0px;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text-color-dark);
+}
+
+p {
+  color: var(--text-color-medium);
+}
+
+a {
+  /* color: #fc6d26; */
+  color: var(--main-theme-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+ol,
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0;
+}
+
+.common_text_styles {
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+  word-spacing: 1px;
+  color: var(--text-color-light);
+}
+
+.container__div {
+  max-width: var(--container-width);
+  margin: auto;
+}

@@ -1,7 +1,6 @@
 package renderers
 
 import (
-	"fmt"
 	"net/http"
 	"path"
 	"text/template"
@@ -22,7 +21,6 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	qstrs := r.URL.Query()
 
 	ctg := string(qstrs.Get("category"))
-	fmt.Printf("ctg = %+v\n", ctg)
 	if ctg == "" {
 		ctg = DefaultCategory
 	}
@@ -44,7 +42,15 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 500, err)
 	}
 
-	fmt.Printf("posts = %+v\n", posts)
+	ps := models.Posts{}
+	for _, p := range posts {
+		ps = append(ps, p)
+	}
+	for _, p := range posts {
+		ps = append(ps, p)
+	}
+
+	posts = ps
 
 	err = t.Execute(w, struct {
 		Posts      models.Posts

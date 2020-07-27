@@ -1,24 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Episteme</title>
-</head>
-<body>
-    <h1>Hello world</h1>
-    {{range .Categories}}
-        <p>{{.Title}}</p>
-    {{end}}
-    
-    {{range .Posts}}
-        <p>{{.Title}}</p>
-        <ol>
-            {{range .Links}}
-            <li>{{.Description}}</li>
-            {{end}}
-        </ol>
-    {{end}}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-</body>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet"> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- <link rel="stylesheet" href="/static/lib/css/common.css" /> -->
+    <link rel="stylesheet" href="/static/lib/css/common.css" />
+    <link rel="stylesheet" href="/static/lib/css/root.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    /> -->
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+
+    <title>Episteme</title>
+  </head>
+  <body>
+    <div class="container__div">
+      <header></header>
+
+      <div class="page_body__div">
+        <nav class="sidebar__nav">
+          <h3>Categories ...</h3>
+          <!-- <h2>Categories</h2> -->
+
+          {{range .Categories}}
+          <a class="common_text_styles" href="?category={{.Title}}"
+            >{{.Title}}</a
+          >
+          {{end}}
+          <a class="common_text_styles">Computer Programming</a>
+          <a class="common_text_styles">Startups</a>
+        </nav>
+
+        <article class="posts_container__article">
+          <h1 class="posts_container_title__h1">Physics</h1>
+          {{range .Posts}}
+          <div class="each_post__div">
+            <!-- <p class="post_title_p common_text_styles">
+              {{.Title}} ..
+            </p> -->
+            <p class="post_title_p common_text_styles">
+              <span>&#x25CF;</span>{{.Title}} ..
+            </p>
+            <p class="post_description_p common_text_styles">
+              {{.Description}}
+            </p>
+            <!-- <h3 class="post_title_p"><span>&#x25CF;</span>{{.Title}}</h3> -->
+            <ul>
+              {{range .Links}}
+              <li class="common_text_styles">
+                {{.Description}} <a href="{{.Src.Url}}">{{.Src.Text}}</a>
+              </li>
+              {{end}}
+            </ul>
+          </div>
+          {{end}}
+        </article>
+      </div>
+
+      <footer>Footer</footer>
+    </div>
+  </body>
 </html>

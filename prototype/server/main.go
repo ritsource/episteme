@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"path"
 
 	_ "github.com/ritsource/episteme/prototype/data/models"
+	"github.com/ritsource/episteme/prototype/server/constants"
 	"github.com/ritsource/episteme/prototype/server/renderers"
 	"github.com/ritsource/episteme/prototype/server/repo"
 	"github.com/rs/cors"
@@ -23,7 +25,9 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	fs := http.FileServer(http.Dir("static/"))
+	staticDir := path.Join(constants.RepositoryRoot, "prototype/server/static")
+	fs := http.FileServer(http.Dir(staticDir))
+
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	mux.HandleFunc("/", renderers.RootHandler)
