@@ -13,6 +13,11 @@
     
     {{range .Posts}}
         <p>{{.Title}}</p>
+        <ol>
+            {{range .Links}}
+            <li>{{.Description}}</li>
+            {{end}}
+        </ol>
     {{end}}
 
 </body>

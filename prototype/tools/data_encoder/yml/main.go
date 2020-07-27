@@ -18,8 +18,8 @@ func main() {
 	}
 	ifp := os.Args[1]
 	ofp := os.Args[2]
-	fmt.Printf("ymlfp = %+v\n", ifp)
-	fmt.Printf("outfp = %+v\n", ofp)
+	// fmt.Printf("ymlfp = %+v\n", ifp)
+	// fmt.Printf("outfp = %+v\n", ofp)
 
 	if ifp == "" {
 		fmt.Printf("invalid input file path %+v\n", ifp)

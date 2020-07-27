@@ -3,6 +3,7 @@ package repo
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"reflect"
@@ -63,7 +64,8 @@ func GetPostsByCategory(ctg models.Post_Category) models.Posts {
 		go func(p *models.Post, i int, wg *sync.WaitGroup) {
 			for _, category := range p.GetCategories() {
 				// NOTE: replace with proto.Equal
-				if category.GetTitle() == ctg.GetTitle() {
+
+				if strings.ToLower(category.GetTitle()) == strings.ToLower(ctg.GetTitle()) {
 					posts[i] = p
 					break
 				}
