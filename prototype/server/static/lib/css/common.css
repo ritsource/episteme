@@ -118,7 +118,6 @@ li {
   width: var(--container-width);
   max-width: var(--container-width-max);
   margin: auto;
-
 }
 
 .page_header__header {

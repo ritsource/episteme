@@ -58,13 +58,25 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = t.Execute(w, struct {
-		Posts                 models.Posts
-		Categories            []models.Post_Category
-		SelectedCategoryTitle string
+		Posts                          models.Posts
+		Categories                     []models.Post_Category
+		SelectedCategoryTitle          string
+		SelectedCategoryTitleFormatted string
 	}{
 		Posts:                 posts,
 		Categories:            categories,
 		SelectedCategoryTitle: ctgTitle,
+		SelectedCategoryTitleFormatted: func(str string) string {
+			// formatting title
+			res := ""
+			for _, s := range strings.Split(str, " ") {
+				if s != "" {
+					res += strings.ToUpper(s[0:1]) + strings.ToLower(s[1:len(s)])
+					res += " "
+				}
+			}
+			return strings.TrimSpace(res)
+		}(ctgTitle),
 	})
 	if err != nil {
 		writeErr(w, 500, err)

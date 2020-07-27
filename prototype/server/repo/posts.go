@@ -3,6 +3,7 @@ package repo
 import (
 	"fmt"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 
@@ -49,6 +50,10 @@ func Inititalize(fp string) error {
 			Title: title.String(),
 		})
 	}
+
+	sort.Slice(Data.Categories, func(i, j int) bool {
+		return Data.Categories[i].Title < Data.Categories[j].Title
+	})
 
 	return nil
 }
