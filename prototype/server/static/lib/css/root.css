@@ -1,13 +1,27 @@
 .page_body__div {
   display: flex;
   flex-direction: row;
-  padding: 30px 0;
+  /* padding: 30px 0; */
+  margin-bottom: 60px;
 }
 
 .sidebar__nav {
+  padding-top: var(--article-header-height);
+
+  width: var(--sidebar-nav-width);
+  /* text-align: right; */
+
+  margin-left: calc(0px - var(--sidebar-nav-width));
+
+  position: absolute;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebar__nav__div {
   display: flex;
   flex-direction: column;
-  padding-top: var(--article-header-height);
 }
 
 .sidebar__nav h2,
@@ -17,20 +31,33 @@ h3 {
   color: var(--text-color-medium);
 }
 
-.sidebar__nav a {
+.sidebar__nav p {
   margin: 4px 10px;
-  width: calc(100% - 20px);
+}
+
+.sidebar__nav a {
 }
 .sidebar__nav a:hover {
   color: var(--main-theme-color);
 }
 
+.sidebar_a_selected_category {
+  /* color: var(--main-theme-color) !important; */
+  text-decoration: underline;
+  /* pointer-events: none;
+  cursor: default; */
+}
+/* .sidebar_a_selected_category:hover {
+  color: var(--main-theme-color) !important;
+} */
+
 /* POST-CONTAINER */
 
 .posts_container__article {
   /* NOTE: */
-  padding-left: 30px;
+  padding: 0px 30px;
   flex-grow: 1;
+  /* margin-top: 0px; */
 }
 
 .posts_container_title__h1 {
@@ -43,6 +70,8 @@ h3 {
   font-size: var(--article-header-font-size);
 
   color: var(--text-color-medium);
+
+  /* border: 1px solid red; */
 }
 
 /* EACH POST */
@@ -64,25 +93,32 @@ h3 {
   display: flex;
   align-items: center;
 
-  font-size: 0.95rem !important;
-  line-height: 12px !important;
-  color: var(--text-color-lightest) !important;
+  /* font-weight: bold;
+  color: var(--text-color-dark); */
 
-  margin: var(--sidebar-header-margin-top) 0px 25px 0px;
-  margin-left: 5px;
+  /* font-size: 0.95rem !important; */
+  line-height: 12px !important;
+  /* color: var(--text-color-lightest) !important; */
+
+  /* margin: var(--sidebar-header-margin-top) 0px 25px 0px; */
+  margin: var(--sidebar-header-margin-top) 0px 15px 0px;
+  /* margin-left: 5px; */
+
+  text-decoration: underline;
+  /* text-underline-position: under; */
 }
 
 .post_title_p span {
-  font-size: 7px;
+  /* font-size: 7px; */
   margin-right: 5px;
 }
 
 .post_description_p {
-  margin: 5px 0px;
+  margin: 10px 0px;
 }
 
 .each_post__div li,
-.each_post__div .post_title_p,
+/* .each_post__div .post_title_p, */
 .each_post__div .post_description_p {
   line-height: 24px;
 }

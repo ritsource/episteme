@@ -53,7 +53,10 @@ func Inititalize(fp string) error {
 	return nil
 }
 
-func GetPostsByCategory(ctg models.Post_Category) models.Posts {
+func GetPostsByCategory(ctg models.Post_Category) (string, models.Posts) {
+	// NOTE: kind of an hack, so try some other way
+	ctgTitle := ""
+
 	posts := make(models.Posts, len(Data.Posts))
 
 	wg := sync.WaitGroup{}
@@ -67,6 +70,7 @@ func GetPostsByCategory(ctg models.Post_Category) models.Posts {
 
 				if strings.ToLower(category.GetTitle()) == strings.ToLower(ctg.GetTitle()) {
 					posts[i] = p
+					ctgTitle = category.Title
 					break
 				}
 			}
@@ -83,7 +87,8 @@ func GetPostsByCategory(ctg models.Post_Category) models.Posts {
 			ps = append(ps, p)
 		}
 	}
-	return ps
+
+	return ctgTitle, ps
 
 }
 

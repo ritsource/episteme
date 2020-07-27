@@ -25,7 +25,7 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		ctg = DefaultCategory
 	}
 
-	posts := repo.GetPostsByCategory(models.Post_Category{
+	ctgTitle, posts := repo.GetPostsByCategory(models.Post_Category{
 		Title: ctg,
 	})
 	categories := repo.GetAllCategories()
@@ -49,15 +49,44 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	for _, p := range posts {
 		ps = append(ps, p)
 	}
+	for _, p := range posts {
+		ps = append(ps, p)
+	}
+	for _, p := range posts {
+		ps = append(ps, p)
+	}
 
 	posts = ps
 
+	// cs := []models.Post_Category{}
+	// for i := 0; i < 40; i++ {
+	// 	for _, c := range categories {
+	// 		cs = append(cs, c)
+	// 	}
+	// }
+
+	// categories = cs
+
+	// // ctg formatted
+	// ctgf := func(str string) string {
+	// 	res := ""
+	// 	for _, s := range strings.Split(str, " ") {
+	// 		if s != "" {
+	// 			res += strings.ToUpper(s[0:1]) + strings.ToLower(s[1:len(s)])
+	// 			res += " "
+	// 		}
+	// 	}
+	// 	return res
+	// }(ctg)
+
 	err = t.Execute(w, struct {
-		Posts      models.Posts
-		Categories []models.Post_Category
+		Posts                 models.Posts
+		Categories            []models.Post_Category
+		SelectedCategoryTitle string
 	}{
-		Posts:      posts,
-		Categories: categories,
+		Posts:                 posts,
+		Categories:            categories,
+		SelectedCategoryTitle: ctgTitle,
 	})
 	if err != nil {
 		writeErr(w, 500, err)
