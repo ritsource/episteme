@@ -16,8 +16,9 @@ var Data = struct {
 	Categories     []models.Post_Category
 	PinnedWebsites models.PinnedWebsites
 }{
-	Posts:      models.Posts{},
-	Categories: []models.Post_Category{},
+	Posts:          models.Posts{},
+	Categories:     []models.Post_Category{},
+	PinnedWebsites: models.PinnedWebsites{},
 }
 
 func Inititalize() error {
@@ -100,4 +101,8 @@ func GetPostsByCategory(ctg models.Post_Category) (string, models.Posts) {
 
 func GetAllCategories() []models.Post_Category {
 	return Data.Categories
+}
+
+func GetPinnedWebsites() models.PinnedWebsites {
+	return Data.PinnedWebsites
 }

@@ -21,6 +21,7 @@ const POST_MSG_DST_DIR = ".data/posts"
 
 type Post = postpb.Post
 type Post_Link = postpb.Post_Link
+type Post_Link_Src = postpb.Post_Link_Src
 type Post_Category = postpb.Post_Category
 
 type Posts []*Post

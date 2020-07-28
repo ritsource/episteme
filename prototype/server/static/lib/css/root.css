@@ -42,7 +42,7 @@ h3 {
 }
 
 .sidebar_a_selected_category {
-  /* color: var(--main-theme-color) !important; */
+  color: var(--main-theme-color) !important;
   text-decoration: underline;
   /* pointer-events: none;
   cursor: default; */

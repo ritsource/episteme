@@ -27,7 +27,7 @@
   <body>
     <header class="page_header__header">
       <p>
-        <a href="https://github.com/ritsource/episteme/blob/master/README.md"
+        <a href="/pinned"
           >Pinned Websites</a
         >
         <a href="https://github.com/ritsource/episteme/blob/master/README.md"
@@ -48,7 +48,7 @@
               {{$Title_LowerCase:=(.Title | ToLower)}}
               <a
                 class="common_text_styles {{if eq $Title_LowerCase $SelectedCategoryTitle_LowerCase}} sidebar_a_selected_category {{end}}"
-                href="?category={{$Title_LowerCase}}"
+                href="/?category={{$Title_LowerCase}}"
                 >{{.Title}}</a
               >
             </p>
