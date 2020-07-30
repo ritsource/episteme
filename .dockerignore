@@ -1,0 +1,7 @@
+Dockderfile
+*.secret
+
+*/.out
+*/.data
+*/.cache
+
