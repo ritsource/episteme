@@ -13,8 +13,6 @@ import (
 	"github.com/ritsource/episteme/prototype/server/repo"
 )
 
-const DefaultCategory = "Learning"
-
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != RoutesMap.Root {
 		NotFoundHandler(w, r)
@@ -24,14 +22,19 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 	qstrs := r.URL.Query()
 
 	ctg := string(qstrs.Get("category"))
-	if ctg == "" {
-		ctg = DefaultCategory
-	}
 
+	categories := repo.GetAllCategories()
+	if ctg == "" {
+		if len(categories) == 0 {
+			writeErr(w, 500, errors.New("no categories exist"))
+			return
+		} else {
+			ctg = categories[0].GetTitle()
+		}
+	}
 	ctgTitle, posts := repo.GetPostsByCategory(models.Post_Category{
 		Title: ctg,
 	})
-	categories := repo.GetAllCategories()
 
 	tfd, err := ioutil.ReadFile(path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"))
 	if err != nil {
