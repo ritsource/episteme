@@ -67,7 +67,7 @@ func CategoriesHandler(w http.ResponseWriter, r *http.Request) {
 		},
 		Categories:                     categories,
 		SelectedCategoryTitle:          "",
-		SelectedCategoryTitleFormatted: "Pinned Websites",
+		SelectedCategoryTitleFormatted: "All Categories",
 		RoutesMap:                      RoutesMap,
 		PageInfo:                       struct{ Page string }{RoutesMap.Categories},
 	})

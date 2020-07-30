@@ -69,14 +69,13 @@
         {{end}}
 
         <article class="posts_container__article">
-          {{if not $IsCategoryPage}}
-            <h1 class="posts_container_title__h1">{{.SelectedCategoryTitleFormatted}}</h1>
-          {{end}}
+          <h1 class="posts_container_title__h1">{{.SelectedCategoryTitleFormatted}}</h1>
           {{range .Posts}}
           <div class="each_post__div">
             <!-- <p class="post_title_p common_text_styles">
               {{.Title}} ..
             </p> -->
+            {{if not $IsCategoryPage}}
             <p class="post_title_p common_text_styles">
               <!-- <span>&#x25CF;</span>{{.Title}} .. -->
               {{.Title}}
@@ -84,6 +83,7 @@
             <p class="post_description_p common_text_styles">
               {{.Description}}
             </p>
+            {{end}}
             <!-- <h3 class="post_title_p"><span>&#x25CF;</span>{{.Title}}</h3> -->
             <ul>
               {{range .Links}}
