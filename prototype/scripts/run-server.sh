@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BIN_PATH="$(git rev-parse --show-toplevel)/prototype/.out/server.out"
+BASEDIR=$(dirname "$0")
 
 function start_server() {
     $BIN_PATH &
@@ -27,14 +28,14 @@ if [ $BUILD_IN_PROCESS -eq 0 ]; then
     printf "\033c"
     printf "\033[1;33mCompiling ...\033[0m\n"
 
-    go build -o $BIN_PATH server/main.go
+    go build -o $BIN_PATH "$BASEDIR/../server/main.go"
     SUCCESS=$?
 
     if [ $THERE_EXISTS_A_NEWER_CHANGE -eq 1 ]; then
         printf "\033c"
         printf "\033[1;33mCompiling ...\033[0m\n"
 
-        go build -o $BIN_PATH server/main.go
+        go build -o $BIN_PATH "$BASEDIR/../server/main.go"
         SUCCESS=$?
     fi
 

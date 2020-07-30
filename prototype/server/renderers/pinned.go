@@ -15,7 +15,7 @@ import (
 )
 
 func PinnedHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/pinned/" {
+	if r.URL.Path != RoutesMap.Pinned {
 		fmt.Printf("r.URL.Path = %+v\n", r.URL.Path)
 		NotFoundHandler(w, r)
 		return
@@ -29,7 +29,7 @@ func PinnedHandler(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 500, errors.New("unable to read template file"))
 	}
 
-	t, err := template.New("rootPageTemplate").Funcs(
+	t, err := template.New("pinnedPageTemplate").Funcs(
 		template.FuncMap{
 			"ToLower": strings.ToLower,
 		},
@@ -43,6 +43,10 @@ func PinnedHandler(w http.ResponseWriter, r *http.Request) {
 		Categories                     []models.Post_Category
 		SelectedCategoryTitle          string
 		SelectedCategoryTitleFormatted string
+		RoutesMap                      RoutesMapType
+		PageInfo                       struct {
+			Page string
+		}
 	}{
 		Posts: models.Posts{
 			&models.Post{
@@ -64,6 +68,8 @@ func PinnedHandler(w http.ResponseWriter, r *http.Request) {
 		Categories:                     categories,
 		SelectedCategoryTitle:          "",
 		SelectedCategoryTitleFormatted: "Pinned Websites",
+		RoutesMap:                      RoutesMap,
+		PageInfo:                       struct{ Page string }{RoutesMap.Pinned},
 	})
 	if err != nil {
 		writeErr(w, 500, err)

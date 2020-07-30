@@ -2,6 +2,7 @@ package renderers
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"path"
@@ -13,24 +14,13 @@ import (
 	"github.com/ritsource/episteme/prototype/server/repo"
 )
 
-const DefaultCategory = "Learning"
-
-func RootHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != RoutesMap.Root {
+func CategoriesHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != RoutesMap.Categories {
+		fmt.Printf("r.URL.Path = %+v\n", r.URL.Path)
 		NotFoundHandler(w, r)
 		return
 	}
 
-	qstrs := r.URL.Query()
-
-	ctg := string(qstrs.Get("category"))
-	if ctg == "" {
-		ctg = DefaultCategory
-	}
-
-	ctgTitle, posts := repo.GetPostsByCategory(models.Post_Category{
-		Title: ctg,
-	})
 	categories := repo.GetAllCategories()
 
 	tfd, err := ioutil.ReadFile(path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"))
@@ -38,16 +28,11 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 		writeErr(w, 500, errors.New("unable to read template file"))
 	}
 
-	t, err := template.New("rootPageTemplate").Funcs(
+	t, err := template.New("categoriesPageTemplate").Funcs(
 		template.FuncMap{
 			"ToLower": strings.ToLower,
 		},
 	).Parse(string(tfd))
-
-	// t, err := template.ParseFiles(
-	// 	path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"),
-	// )
-
 	if err != nil {
 		writeErr(w, 500, err)
 	}
@@ -62,22 +47,29 @@ func RootHandler(w http.ResponseWriter, r *http.Request) {
 			Page string
 		}
 	}{
-		Posts:                 posts,
-		Categories:            categories,
-		SelectedCategoryTitle: ctgTitle,
-		SelectedCategoryTitleFormatted: func(str string) string {
-			// formatting title
-			res := ""
-			for _, s := range strings.Split(str, " ") {
-				if s != "" {
-					res += strings.ToUpper(s[0:1]) + strings.ToLower(s[1:len(s)])
-					res += " "
-				}
-			}
-			return strings.TrimSpace(res)
-		}(ctgTitle),
-		RoutesMap: RoutesMap,
-		PageInfo:  struct{ Page string }{RoutesMap.Root},
+		Posts: models.Posts{
+			&models.Post{
+				Title: "All Categories",
+				Links: func(ctgs []models.Post_Category) []*models.Post_Link {
+					res := []*models.Post_Link{}
+					for _, ctg := range ctgs {
+						// fmt.Printf("- %v\n", fmt.Sprintf("/?category=%v", ctg.GetTitle()))
+						res = append(res, &models.Post_Link{
+							Src: &models.Post_Link_Src{
+								Text: ctg.GetTitle(),
+								Url:  fmt.Sprintf("/?category=%v", ctg.GetTitle()),
+							},
+						})
+					}
+					return res
+				}(categories),
+			},
+		},
+		Categories:                     categories,
+		SelectedCategoryTitle:          "",
+		SelectedCategoryTitleFormatted: "Pinned Websites",
+		RoutesMap:                      RoutesMap,
+		PageInfo:                       struct{ Page string }{RoutesMap.Categories},
 	})
 	if err != nil {
 		writeErr(w, 500, err)

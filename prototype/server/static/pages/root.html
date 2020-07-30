@@ -25,25 +25,31 @@
     <title>Episteme</title>
   </head>
   <body>
+    {{$IsCategoryPage:=(eq $.PageInfo.Page $.RoutesMap.Categories)}}
+    
     <header class="page_header__header">
-      <p>
-        <a href="/pinned"
-          >Pinned Websites</a
-        >
-        <a href="https://github.com/ritsource/episteme/blob/master/README.md"
-          >What is this thing?</a
-        >
-      </p>
+      <header class="page_header__header">
+        <p>
+          <a class="ONLY__show_in_mobile_view" href="{{if $IsCategoryPage}}/{{else}}/categories{{end}}"
+          >{{if $IsCategoryPage}}Home{{else}}All Categories{{end}}</a>
+          <a href="https://github.com/ritsource/episteme/blob/master/README.md"
+            >About</a
+          >
+          <a href="/pinned">Pinned Websites</a>
+        </p>
+      </header>
     </header>
     <div class="container__div">
       <div class="page_body__div">
+        {{if ne .PageInfo.Page .RoutesMap.Categories}}
         <nav class="sidebar__nav">
           <div class="sidebar__nav__div">
             <h3>Categories</h3>
             <!-- <h2>Categories</h2> -->
 
-            {{range .Categories}}
             {{$SelectedCategoryTitle_LowerCase:=($.SelectedCategoryTitle | ToLower)}}
+
+            {{range .Categories}}
             <p>
               {{$Title_LowerCase:=(.Title | ToLower)}}
               <a
@@ -55,9 +61,12 @@
             {{end}}
           </div>
         </nav>
+        {{end}}
 
         <article class="posts_container__article">
-          <h1 class="posts_container_title__h1">{{.SelectedCategoryTitleFormatted}}</h1>
+          {{if not $IsCategoryPage}}
+            <h1 class="posts_container_title__h1">{{.SelectedCategoryTitleFormatted}}</h1>
+          {{end}}
           {{range .Posts}}
           <div class="each_post__div">
             <!-- <p class="post_title_p common_text_styles">
@@ -65,7 +74,7 @@
             </p> -->
             <p class="post_title_p common_text_styles">
               <!-- <span>&#x25CF;</span>{{.Title}} .. -->
-              {{.Title}} ..
+              {{.Title}}
             </p>
             <p class="post_description_p common_text_styles">
               {{.Description}}
@@ -85,5 +94,7 @@
 
       <!-- <footer>Footer</footer> -->
     </div>
+
+    <script src="/static/lib/js/index.js"></script>
   </body>
 </html>

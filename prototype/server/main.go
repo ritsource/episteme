@@ -23,13 +23,16 @@ func main() {
 	// posts := repo.GetPostsByCategory(models.Post_Category{Title: "Learning"})
 	// fmt.Printf("\"Learning\" Posts ...\n%+v\n", posts)
 
+	routes := renderers.RoutesMap
+
 	mux := http.NewServeMux()
 
 	staticDir := path.Join(constants.RepositoryRoot, "prototype/server/static")
 	fs := http.FileServer(http.Dir(staticDir))
 
-	mux.HandleFunc("/", renderers.RootHandler)
-	mux.HandleFunc("/pinned/", renderers.PinnedHandler)
+	mux.HandleFunc(routes.Root, renderers.RootHandler)
+	mux.HandleFunc(routes.Pinned, renderers.PinnedHandler)
+	mux.HandleFunc(routes.Categories, renderers.CategoriesHandler)
 
 	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
