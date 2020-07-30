@@ -1,6 +1,7 @@
 :root {
-  --main-theme-color: #ff5600;
+  /* --main-theme-color: #ff5600; */
   /* --main-theme-color: #00a82d; */
+  --main-theme-color: #0077b5;
 
   --main-bg-color: white;
 
@@ -125,9 +126,7 @@ li {
   max-width: calc(var(--container-width-max) - 60px);
   margin: auto;
 
-  padding: 40px 40px 5px 40px;
-
-  /* border: 1px solid black; */
+  padding: 40px 0px 5px 0px;
 
   margin-bottom: 0px;
 
@@ -135,8 +134,7 @@ li {
   justify-content: flex-start;
 }
 .page_header__header p {
-  /* border: 1px solid red; */
-  display: inline-block;
+  /* display: inline-block; */
   margin-right: 0;
 }
 .page_header__header p a {

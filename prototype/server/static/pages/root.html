@@ -28,16 +28,21 @@
     {{$IsCategoryPage:=(eq $.PageInfo.Page $.RoutesMap.Categories)}}
     
     <header class="page_header__header">
-      <header class="page_header__header">
-        <p>
-          <a class="ONLY__show_in_mobile_view" href="{{if $IsCategoryPage}}/{{else}}/categories{{end}}"
-          >{{if $IsCategoryPage}}Home{{else}}All Categories{{end}}</a>
-          <a href="https://github.com/ritsource/episteme/blob/master/README.md"
+      <p>
+        <span class="ONLY__show_in_mobile_view"
+          ><a href="{{if $IsCategoryPage}}/{{else}}/categories{{end}}"
+            >{{if $IsCategoryPage}}Home{{else}}All Categories{{end}}</a
+          ></span
+        >
+        <span
+          ><a
+            target="_blank"
+            href="https://github.com/ritsource/episteme/blob/master/README.md"
             >About</a
-          >
-          <a href="/pinned">Pinned Websites</a>
-        </p>
-      </header>
+          ></span
+        >
+        <span><a href="/pinned">Pinned</a></span>
+      </p>
     </header>
     <div class="container__div">
       <div class="page_body__div">
