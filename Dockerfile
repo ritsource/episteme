@@ -8,11 +8,9 @@ WORKDIR /go/src/github.com/ritsource/episteme
 
 COPY . .
 
-RUN cd ./prototype && go get ./...
+RUN cd prototype && go get ./...
 
-RUN git rev-parse --show-toplevel
-
-RUN go run ./prototype/tools/data_encoder/yml/main.go
+# RUN go run ./prototype/tools/data_encoder/yml/main.go
 
 RUN mkdir -p /app/.out
 

@@ -2,6 +2,6 @@ Dockderfile
 *.secret
 
 */.out
-*/.data
+# */.data
 */.cache
 
