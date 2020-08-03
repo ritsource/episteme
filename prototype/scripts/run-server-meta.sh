@@ -1,6 +1,7 @@
 #!/bin/bash
 
 BIN_PATH="$(git rev-parse --show-toplevel)/prototype/.out/server.out"
+BASEDIR=$(dirname "$0")
 
 function stop_server() {
     PID=$(ps -ef | grep -v grep | grep $BIN_PATH | awk '{print $2}')
@@ -31,4 +32,4 @@ export THERE_EXISTS_A_NEWER_CHANGE=0
 
 # source - https://stackoverflow.com/a/38229197/9406420
 # ls **/*.go | entr bash scripts/run-server.sh
-find . -name "*.go" | entr bash scripts/run-server.sh
+find . -name "*.go" | entr bash "$BASEDIR/run-server.sh"

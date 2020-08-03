@@ -26,5 +26,5 @@
 # End of https://www.toptal.com/developers/gitignore/api/go
 
 
-# .data
-# .cache
+.data
+.cache

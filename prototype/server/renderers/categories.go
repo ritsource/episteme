@@ -14,22 +14,21 @@ import (
 	"github.com/ritsource/episteme/prototype/server/repo"
 )
 
-func PinnedHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != RoutesMap.Pinned {
+func CategoriesHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != RoutesMap.Categories {
 		fmt.Printf("r.URL.Path = %+v\n", r.URL.Path)
 		NotFoundHandler(w, r)
 		return
 	}
 
 	categories := repo.GetAllCategories()
-	pinnedWebsites := repo.GetPinnedWebsites()
 
 	tfd, err := ioutil.ReadFile(path.Join(constants.RepositoryRoot, "prototype/server/static/pages/root.html"))
 	if err != nil {
 		writeErr(w, 500, errors.New("unable to read template file"))
 	}
 
-	t, err := template.New("pinnedPageTemplate").Funcs(
+	t, err := template.New("categoriesPageTemplate").Funcs(
 		template.FuncMap{
 			"ToLower": strings.ToLower,
 		},
@@ -50,26 +49,27 @@ func PinnedHandler(w http.ResponseWriter, r *http.Request) {
 	}{
 		Posts: models.Posts{
 			&models.Post{
-				Title: "More websites like this one",
-				Links: func(pws models.PinnedWebsites) []*models.Post_Link {
+				Title: "All Categories",
+				Links: func(ctgs []models.Post_Category) []*models.Post_Link {
 					res := []*models.Post_Link{}
-					for _, w := range pws {
+					for _, ctg := range ctgs {
+						// fmt.Printf("- %v\n", fmt.Sprintf("/?category=%v", ctg.GetTitle()))
 						res = append(res, &models.Post_Link{
 							Src: &models.Post_Link_Src{
-								Text: w.GetValue(),
-								Url:  w.GetValue(),
+								Text: ctg.GetTitle(),
+								Url:  fmt.Sprintf("/?category=%v", ctg.GetTitle()),
 							},
 						})
 					}
 					return res
-				}(pinnedWebsites),
+				}(categories),
 			},
 		},
 		Categories:                     categories,
 		SelectedCategoryTitle:          "",
-		SelectedCategoryTitleFormatted: "Pinned Websites",
+		SelectedCategoryTitleFormatted: "All Categories",
 		RoutesMap:                      RoutesMap,
-		PageInfo:                       struct{ Page string }{RoutesMap.Pinned},
+		PageInfo:                       struct{ Page string }{RoutesMap.Categories},
 	})
 	if err != nil {
 		writeErr(w, 500, err)
