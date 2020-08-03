@@ -12,7 +12,7 @@ Ofcourse there's the everold option of building & hosting all your data on a web
 
 Here's a screenshot of the application ...
 
-![screenshot](https://raw.githubusercontent.com/ritsource/episteme/master/prototype/assets/screenshots/screenshot.0.png)
+![screenshot](https://raw.githubusercontent.com/ritsource/episteme/master/assets/screenshots/screenshot.0.png)
 
 Link here ...
 

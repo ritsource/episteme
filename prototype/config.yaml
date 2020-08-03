@@ -1,14 +1,16 @@
 posts:
   - title: Quantum Mechanics (pseudoscientific explanations)
     links:
-      - description: 'Disclaimer first,'
+      - description: 'Disclaimer first -'
         src:
           text: Richard Feynman on "why"
           url: 'https://youtu.be/36GT2zI8lVA'
+
       - description: ''
         src:
           text: The Double-slit Experiment
           url: 'https://youtu.be/GzbKb59my3U'
+
       - description:
           A journey through the development of Quantum Mechanics and it's
           various concepts -
@@ -16,39 +18,97 @@ posts:
           text: a playlist by PBS Space-Time
           url:
             https://www.youtube.com/playlist?list=PLsPUh22kYmNCGaVGuGfKfJl-6RdHiCjo1
+
       - description:
           This is perhaps the best no-math explanation of Quantum Entanglement,
           Superposition, and Wave Functions -
         src:
           text: The Many-worlds Interpretation of Quantum Mechanics
           url: 'https://youtu.be/kTXTPe3wahc'
-      - description: 'Bell''s Theorem, the Quantum Venn Diagram Paradox -'
-        src:
-          text: the Explanation by MinutePhysics
-          url: 'https://youtu.be/zcqZHYo7ONs'
-      - description: 'Bell''s Theorem, the Quantum Venn Diagram Paradox -'
-        src:
-          text: Math behind it by 3blue1brown
-          url: 'https://youtu.be/MzRCDLre1b4'
+
+      # - description: 'Bell''s Theorem, the Quantum Venn Diagram Paradox -'
+      #   src:
+      #     text: the Explanation by MinutePhysics
+      #     url: 'https://youtu.be/zcqZHYo7ONs'
+
+      # - description: 'Bell''s Theorem, the Quantum Venn Diagram Paradox -'
+      #   src:
+      #     text: Math behind it by 3blue1brown
+      #     url: 'https://youtu.be/MzRCDLre1b4'
+
       - description: 'Quantum Fields, the real building blocks of the universe -'
         src:
           text: A Royal Institution Lecture by David Tong
           url: 'https://youtu.be/zNVQfWC_evg'
+
     categories:
       - title: Physics
-  - title: Learning Resources
+
+  - title: Favourite Lex Fridman (AI Podcast) episodes (ranked as personal favourites) 
     links:
-      - description: Khan Academy
+      - description: 'Eric Weinstein -'
         src:
-          text: khanacademy.org
-          url: 'https://khanacademy.org'
-      - description: MIT OpenCourseWare
+          text: "Revolutionary Ideas in Science, Math, and Society"
+          url: "https://youtu.be/2wq9x2QcZN0"
+
+      - description: "Joscha Bach -"
         src:
-          text: ocw.mit.edu
-          url: 'https://ocw.mit.edu'
-    is_draft: true
+          text: "Artificial Consciousness and the Nature of Reality"
+          url: 'https://youtu.be/P-2P3MSZrBM'
+
+      - description: "Chris Lattner -"
+        src:
+          text: "Compilers, LLVM, Swift, TPU, and ML Accelerators"
+          url: 'https://youtu.be/yCd3CzGSte8'
+
+      - description: "George Hotz -"
+        src:
+          text: "Comma.ai, OpenPilot, and Autonomous Vehicles (personally, super inspiring)"
+          url: 'https://youtu.be/iwcYp-XT7UI'
+
+      - description: "Daniel Kahneman -"
+        src:
+          text: "Thinking Fast and Slow, Deep Learning, and AI"
+          url: 'https://youtu.be/UwwBG-MbniY'
+
+      - description: "Richard Dawkins -"
+        src:
+          text: "Evolution, Intelligence, Simulation, and Memes"
+          url: 'https://youtu.be/5f-JlzBuUUU'
+
+      - description: "Bjarne Stroustrup -"
+        src:
+          text: "C++ (learned a ton about Programming Languages, Computer Science & it's history in general)"
+          url: 'https://youtu.be/uTxRF5ag27A'
+        
+      - description: "Michael Stevens -"
+        src:
+          text: "Vsauce"
+          url: 'https://youtu.be/3qMemn__kK8'
+        
+      - description: "Leonard Susskind -"
+        src:
+          text: "Quantum Mechanics, String Theory and Black Holes (super inspiring)"
+          url: 'https://youtu.be/s78hvV3QLUE'
+        
+      # - description: "Donald Knuth -"
+      #   src:
+      #     text: "Algorithms, Complexity, Life, and The Art of Computer Programming"
+      #     url: 'https://youtu.be/2BdBfsXbST8'
+        
+      # - description: "Stuart Russell -"
+      #   src:
+      #     text: "Long-Term Future of Artificial Intelligence"
+      #     url: 'https://youtu.be/KsZI5oXBC0k'
+        
+      # - description: "Christof Koch -"
+      #   src:
+      #     text: "Consciousness"
+      #     url: 'https://youtu.be/piHkfmeU7Wo'
+
     categories:
-      - title: Learning
+      - title: Podcasts
+      
 pinned_websites:
   - value: 'https://resources-iota.vercel.app'
   - value: 'https://ritwiksaha.com/blog/favourite-resources'

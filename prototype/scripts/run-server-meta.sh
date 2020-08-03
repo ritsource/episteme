@@ -32,4 +32,6 @@ export THERE_EXISTS_A_NEWER_CHANGE=0
 
 # source - https://stackoverflow.com/a/38229197/9406420
 # ls **/*.go | entr bash scripts/run-server.sh
-find . -name "*.go" | entr bash "$BASEDIR/run-server.sh"
+# find . -name "*.go" | entr bash "$BASEDIR/run-server.sh"
+find ./ f \( -iname \*.go -o -iname \*.yaml \) | entr bash "$BASEDIR/run-server.sh"
+
